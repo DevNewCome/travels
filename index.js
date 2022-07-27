@@ -2,9 +2,14 @@ const express = require('express')
 const app = express()
 const expressHandleBars = require('express-handlebars')
 const port = process.env.PORT || 3000
+const fortune = require('./lib/fortune')
+
+
 
 //midleware para public
 app.use(express.static(__dirname + '/public'))
+
+
 
 // app get adiciona rotas
 app.get('/', (req, res)=>{
@@ -12,8 +17,7 @@ app.get('/', (req, res)=>{
 })
 
  app.get('/about', (req,res)=>{
-  const randomFortune = fortune[Math.floor(Math.random()*fortune.length)]
- res.render('about', {fortune: randomFortune})
+ res.render('about', {fortune: fortune.getFortune()})
 })
 
 // Configura view engine
@@ -39,15 +43,6 @@ app.use((err, req, res, next)=>{
   res.render('500')
 })
 
-const fortune = [
-  "gemidos",
-  "Bola",
-  "Casa",
-  "Dado",
-  "Elefante",
-  "Fogo",
-  "Gado",
-]
 
 
 
